@@ -1,0 +1,8 @@
+# HiL Test Automation Dashboard - Alpha Version
+# Python 3.12+ required
+
+# Testing framework (for beta version)
+pytest>=8.0.0
+
+# GUI is built with tkinter (included with Python)
+# No additional GUI dependencies needed for alpha
