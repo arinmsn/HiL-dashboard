@@ -1,0 +1,12 @@
+{
+    "saved_at": "2026-02-07T22:55:02.065596",
+    "version": "beta-1.0",
+    "config": {
+        "suite": "CAN Bus Communication Tests",
+        "device_ip": "192.168.10.10",
+        "port": "8081",
+        "timeout": "60",
+        "verbose": true,
+        "stop_on_fail": true
+    }
+}

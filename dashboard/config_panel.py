@@ -95,10 +95,52 @@ class ConfigPanel:
         bottom_btns.pack(fill='x')
         
         tk.Button(bottom_btns, text="Save Config", 
-                 command=lambda: messagebox.showinfo("Info", "Save feature coming in Beta version")).pack(side='left', fill='x', expand=True, padx=(0, 5))
+                 command=self.save_current_config).pack(side='left', fill='x', expand=True, padx=(0, 5))
         tk.Button(bottom_btns, text="Load Config",
-                 command=lambda: messagebox.showinfo("Info", "Load feature coming in Beta version")).pack(side='right', fill='x', expand=True, padx=(5, 0))
+                 command=self.load_saved_config).pack(side='right', fill='x', expand=True, padx=(5, 0))
     
+    def save_current_config(self):
+        """Save current configuration to file"""
+        from config_manager import ConfigManager
+        
+        config_data = {
+            'suite': self.suite_combo.get(),
+            'device_ip': self.config['device_ip'].get(),
+            'port': self.config['port'].get(),
+            'timeout': self.config['timeout'].get(),
+            'verbose': self.config['verbose'].get(),
+            'stop_on_fail': self.config['stop_on_fail'].get()
+        }
+        
+        manager = ConfigManager()
+        manager.save_config(config_data)
+    
+    def load_saved_config(self):
+        """Load configuration from file"""
+        from config_manager import ConfigManager
+        
+        manager = ConfigManager()
+        config_data = manager.load_config()
+        
+        if config_data:
+            # Update UI with loaded values
+            if 'suite' in config_data:
+                # Find and select the suite in combobox
+                suite_value = config_data['suite']
+                if suite_value in self.suite_combo['values']:
+                    self.suite_combo.set(suite_value)
+            
+            if 'device_ip' in config_data:
+                self.config['device_ip'].set(config_data['device_ip'])
+            if 'port' in config_data:
+                self.config['port'].set(config_data['port'])
+            if 'timeout' in config_data:
+                self.config['timeout'].set(config_data['timeout'])
+            if 'verbose' in config_data:
+                self.config['verbose'].set(config_data['verbose'])
+            if 'stop_on_fail' in config_data:
+                self.config['stop_on_fail'].set(config_data['stop_on_fail'])
+
     def run_tests(self):
         """Trigger test execution"""
         config_data = {
